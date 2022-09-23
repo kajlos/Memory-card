@@ -1,22 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Card, { CreateCard } from './components/Card';
 import Footer from './components/Footer';
 import './styles/App.css';
 function App() {
-  const [cards, setCards] = useState([
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-    new CreateCard({ cardBackground: 'red', shape: 'square', shapeBackground: 'blue' }),
-  ]);
+  const [cards, setCards] = useState([]);
   const createCards = () => {
     const colors = ['red', 'blue', 'green', 'grey'];
     const shapez = ['square', 'circle', 'triangle'];
@@ -30,20 +17,23 @@ function App() {
       let obj = { cardBackground: cardColor, shapeBackground: shapeColor, shape: shape };
       if (isInArray(newCards, obj)) continue;
       else {
-        newCards.push(obj);
+        newCards.push(new CreateCard(obj));
       }
     }
-    console.log(newCards);
+    return newCards;
   };
   const isInArray = (array, obj) => {
     for (let i = 0; i < array.length; i++) {
-      console.log(array, obj);
-      console.log(JSON.stringify(array[i]) === JSON.stringify(obj));
-      if (JSON.stringify(array[i]) === JSON.stringify(obj)) return true;
+      console.log(JSON.stringify(array[i].appearance) === JSON.stringify(obj));
+      if (JSON.stringify(array[i].appearance) === JSON.stringify(obj)) return true;
     }
     return false;
   };
-  createCards();
+  useEffect(() => {
+    let newCards = createCards();
+    console.log(newCards);
+    setCards(newCards);
+  }, []);
   return (
     <div className="app">
       <header>
@@ -51,6 +41,7 @@ function App() {
       </header>
       <main>
         <div className="cardsContainer">
+          {console.log(cards)}
           {cards.map(x => {
             return <Card key={x.id} card={x} />;
           })}
