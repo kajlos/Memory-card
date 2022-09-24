@@ -3,7 +3,12 @@
   margin: 0;
   box-sizing: border-box;
 }
-
+:root {
+  --red: rgb(220, 20, 60);
+  --green: rgb(50, 205, 50);
+  --blue: rgb(0, 191, 255);
+  --grey: rgb(128, 128, 128);
+}
 #root {
   flex: 1;
 }
@@ -46,18 +51,7 @@ footer p {
   width: 80%;
   place-items: center;
 }
-.red {
-  background-color: red;
-}
-.blue {
-  background-color: blue;
-}
-.grey {
-  background-color: grey;
-}
-.green {
-  background-color: green;
-}
+
 .card {
   height: 250px;
   width: 200px;
@@ -73,6 +67,18 @@ footer p {
   width: 100px;
   border-radius: 50%;
 }
+.red {
+  background-color: var(--red);
+}
+.blue {
+  background-color: var(--blue);
+}
+.grey {
+  background-color: var(--grey);
+}
+.green {
+  background-color: var(--green);
+}
 .triangle {
   height: 0;
   width: 0;
@@ -82,14 +88,14 @@ footer p {
   border-bottom: 100px solid;
 }
 .triangle.red {
-  border-bottom: 100px solid red;
+  border-bottom: 100px solid var(--red);
 }
 .triangle.blue {
-  border-bottom: 100px solid blue;
+  border-bottom: 100px solid var(--blue);
 }
 .triangle.green {
-  border-bottom: 100px solid green;
+  border-bottom: 100px solid var(--green);
 }
 .triangle.grey {
-  border-bottom: 100px solid grey;
+  border-bottom: 100px solid var(--grey);
 }
