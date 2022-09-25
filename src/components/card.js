@@ -1,8 +1,13 @@
 import React from 'react';
 import uniqid from 'uniqid';
-export default function Card({ card }) {
+export default function Card({ card, handleClick }) {
   return (
-    <div className={`${card.appearance.cardBackground} card`}>
+    <div
+      className={`${card.appearance.cardBackground} card`}
+      onClick={() => {
+        handleClick(card.id);
+      }}
+    >
       <div className={`${card.appearance.shape} ${card.appearance.shapeBackground}`}></div>
     </div>
   );

@@ -57,6 +57,7 @@ footer p {
   width: 200px;
   display: grid;
   place-items: center;
+  cursor: pointer;
 }
 .square {
   height: 100px;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Card, { CreateCard } from './components/Card';
 import Footer from './components/Footer';
+import Header from './components/Header';
 import './styles/App.css';
 function App() {
   const [cards, setCards] = useState([]);
@@ -24,7 +25,6 @@ function App() {
   };
   const isInArray = (array, obj) => {
     for (let i = 0; i < array.length; i++) {
-      console.log(JSON.stringify(array[i].appearance) === JSON.stringify(obj));
       if (JSON.stringify(array[i].appearance) === JSON.stringify(obj)) return true;
     }
     return false;
@@ -34,16 +34,40 @@ function App() {
     console.log(newCards);
     setCards(newCards);
   }, []);
+  const shuffleArray = array => {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  };
+  const handleClick = id => {
+    let object = cards.find(val => val.id === id);
+    console.log(object);
+    if (object.isClicked === true) {
+      console.log('false');
+    } else {
+      console.log('true');
+      let newCards = cards.map(x => {
+        if (x.id !== id) return x;
+        else {
+          let obj = { ...x, isClicked: true };
+          return obj;
+        }
+      });
+      let shuffledCards = shuffleArray(newCards);
+      setCards(shuffledCards);
+    }
+  };
   return (
     <div className="app">
-      <header>
-        <h1>Memory Game</h1>
-      </header>
+      <Header />
       <main>
         <div className="cardsContainer">
-          {console.log(cards)}
           {cards.map(x => {
-            return <Card key={x.id} card={x} />;
+            return <Card key={x.id} card={x} handleClick={handleClick} />;
           })}
         </div>
       </main>
