@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function Scoreboard() {
+export default function Scoreboard({ scoreboard: { current, best } }) {
   return (
-    <div>
-      <span>Current:</span>
-      <span>Best:</span>
+    <div className="scoreboard">
+      <b>Score: {current}</b>
+      <b>Best Score: {best}</b>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import Header from './components/Header';
 import './styles/App.css';
 function App() {
   const [cards, setCards] = useState([]);
+  const [scoreboard, setScoreboard] = useState({ current: 0, best: 0 });
   const createCards = () => {
     const colors = ['red', 'blue', 'green', 'grey'];
     const shapez = ['square', 'circle', 'triangle'];
@@ -46,10 +47,20 @@ function App() {
   const handleClick = id => {
     let object = cards.find(val => val.id === id);
     console.log(object);
-    if (object.isClicked === true) {
-      console.log('false');
+    if (object.isClicked) {
+      setScoreboard(prev => {
+        let best;
+        if (prev.current < prev.best) {
+          best = prev.best;
+        } else {
+          best = prev.current;
+        }
+        return { best: best, current: 0 };
+      });
+      let newCards = createCards();
+      setCards(newCards);
+      return;
     } else {
-      console.log('true');
       let newCards = cards.map(x => {
         if (x.id !== id) return x;
         else {
@@ -57,13 +68,20 @@ function App() {
           return obj;
         }
       });
+      setScoreboard(prev => {
+        return { ...prev, current: prev.current + 1 };
+      });
+      console.log(newCards.every(x => x.isClicked));
+      if (newCards.every(x => x.isClicked)) {
+        newCards = createCards();
+      }
       let shuffledCards = shuffleArray(newCards);
       setCards(shuffledCards);
     }
   };
   return (
     <div className="app">
-      <Header />
+      <Header scoreboard={scoreboard} />
       <main>
         <div className="cardsContainer">
           {cards.map(x => {
